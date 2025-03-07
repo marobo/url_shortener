@@ -1,0 +1,93 @@
+{% extends 'shortener/base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title mb-4 text-center">Your Shortened URLs</h2>
+        {% if urls %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Original URL</th>
+                        <th>Current URL</th>
+                        <th>Shortened URL</th>
+                        <th>QR Code</th>
+                        <th>Visits</th>
+                        <th>Created</th>
+                        <th>Last Updated</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for url in urls %}
+                    <tr>
+                        <td>
+                            <form method="post" action="{% url 'shortener:update_url' url.short_code %}" class="d-inline">
+                                {% csrf_token %}
+                                <div class="input-group">
+                                    <input type="url" name="new_url" class="form-control" value="{{ url.original_url }}" required>
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">Update</button>
+                                </div>
+                            </form>
+                        </td>
+                        <td>
+                            <a href="{{ url.original_url }}" target="_blank" class="text-truncate d-inline-block" style="max-width: 200px;">
+                                {{ url.original_url }}
+                            </a>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input type="text" class="form-control" value="{{ request.scheme }}://{{ request.get_host }}/{{ url.short_code }}" readonly>
+                                <button class="btn btn-outline-secondary btn-sm" type="button" onclick="copyToClipboard(this)">
+                                    <i class="bi bi-clipboard"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <img src="{{ url.qr_code.url }}" alt="QR Code" class="img-fluid mb-2" style="max-width: 100px;">
+                                <a href="{{ url.qr_code.url }}" download class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-download"></i>
+                                </a>
+                            </div>
+                        </td>
+                        <td>{{ url.visits }}</td>
+                        <td>{{ url.created_at|date:"Y-m-d H:i" }}</td>
+                        <td>{{ url.updated_at|date:"Y-m-d H:i" }}</td>
+                        <td>
+                            <form method="post" action="{% url 'shortener:delete_url' url.short_code %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this URL?')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <p class="text-muted">No URLs have been shortened yet.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function copyToClipboard(button) {
+    const input = button.parentElement.querySelector('input');
+    input.select();
+    document.execCommand('copy');
+    
+    // Change icon to checkmark temporarily
+    const icon = button.querySelector('i');
+    icon.className = 'bi bi-check';
+    setTimeout(() => {
+        icon.className = 'bi bi-clipboard';
+    }, 2000);
+}
+</script>
+{% endblock %} 
