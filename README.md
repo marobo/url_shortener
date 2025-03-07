@@ -15,7 +15,7 @@ A Django-based URL shortener application that allows you to create short URLs an
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/url_shortener.git
+git clone https://github.com/marobo/url_shortener.git
 cd url_shortener
 ```
 
