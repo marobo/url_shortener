@@ -5,7 +5,7 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
-                <h2 class="card-title text-center mb-4">Your Shortened URL</h2>
+                <h2 class="card-title text-center mb-4">Your Shortened URL and QR Code</h2>
                 <div class="mb-4">
                     <label class="form-label">Original URL:</label>
                     <a href="{{ url.original_url }}" target="_blank" class="form-control text-break">{{ url.original_url }}</a>
@@ -19,11 +19,20 @@
                         </button>
                     </div>
                 </div>
-                <div class="text-center">
-                    <img src="{{ url.qr_code.url }}" alt="QR Code" class="img-fluid mb-3" style="max-width: 200px;">
-                    <div>
+                <div class="mb-4">
+                    <label class="form-label">QR Code:</label>
+                    <div class="text-center">
+                        <img src="{{ url.qr_code.url }}" alt="QR Code" class="img-fluid mb-3" style="max-width: 200px;">
+                    </div>
+                    <div class="text-center">
                         <a href="{{ url.qr_code.url }}" download class="btn btn-outline-primary">
                             <i class="bi bi-download"></i> Download QR Code
+                        </a>
+                        <a href="{{ url.qr_code.url }}" target="_blank" class="btn btn-outline-primary">
+                            <i class="bi bi-eye"></i> View QR Code
+                        </a>
+                        <a href="{{ url.qr_code.url }}" target="_blank" class="btn btn-outline-primary">
+                            <i class="bi bi-share"></i> Share QR Code
                         </a>
                     </div>
                 </div>

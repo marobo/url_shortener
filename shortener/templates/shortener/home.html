@@ -5,7 +5,7 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
-                <h2 class="card-title text-center mb-4">URL Shortener</h2>
+                <h2 class="card-title text-center mb-4">URL Shortener and QR Code Generator</h2>
                 <form method="post">
                     {% csrf_token %}
                     {% for field in form %}
@@ -23,7 +23,7 @@
                     </div>
                     {% endfor %}
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Generate URL</button>
+                        <button type="submit" class="btn btn-primary">Generate</button>
                     </div>
                 </form>
                 <div class="mt-3">
