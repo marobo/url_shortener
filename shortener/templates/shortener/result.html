@@ -31,8 +31,8 @@
                         <a href="{{ url.qr_code.url }}" target="_blank" class="btn btn-outline-primary">
                             <i class="bi bi-eye"></i> View QR Code
                         </a>
-                        <a href="{{ url.qr_code.url }}" target="_blank" class="btn btn-outline-primary">
-                            <i class="bi bi-share"></i> Share QR Code
+                        <a href="{% url 'shortener:url_list' %}" class="btn btn-outline-primary">
+                            <i class="bi bi-list"></i> View All
                         </a>
                     </div>
                 </div>
